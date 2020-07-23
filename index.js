@@ -4,6 +4,8 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const { User } = require('./models/User');
 
+const config = require('./config/key');
+
 //application/x-www-form-urlencoded  이 데이터를 분석해서 들고옴
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -11,16 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
+
 mongoose
-  .connect(
-    'mongodb+srv://dblight:asd123@bolierplate.sefdg.mongodb.net/<dbname>?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log('MongoDB Conected....'))
   .catch((err) => console.log(err));
 
